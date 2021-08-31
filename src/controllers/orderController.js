@@ -1,7 +1,9 @@
 module.exports = app => {
-    app.get('/orders', (req, res) => res.send('Get orders'))
+    app.get('/orders', (request, response) => {
+        return response.json({ message: "Get orders" })
+    })
 
-    app.post('/orders', (req, res) => {
+    app.post('/orders', (request, response) => {
         console.log(req.body)
         res.send('Order created')
     })
