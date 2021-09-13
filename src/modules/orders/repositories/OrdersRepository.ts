@@ -1,49 +1,42 @@
-import { Order } from "../model/Order";
+import { getRepository, Repository } from "typeorm";
+import { Order } from "../entities/Order";
 import { IOrdersRepository, ICreateOrderDTO, IUpdateOrderDTO} from "./IOrdersRepository";
 
 class OrdersRepository implements IOrdersRepository{
-
-    private orders: Order[];
-
+    private repository: Repository<Order>;
+    
     constructor() {
-        this.orders = [];
+        this.repository = getRepository(Order)
     }
 
-    get() {
-        return this.orders;
+    async get(): Promise<Order[]> {
+        return await this.repository.find();
     }
 
-    create({ customerName, status, paymentType, amount }: ICreateOrderDTO) {
-        const order = new Order();
+    async create({ customerName, status, paymentType, amount }: ICreateOrderDTO): Promise<string> {
+        const order = this.repository.create({
+            customerName, status, paymentType, amount,
+        });
 
-        Object.assign(Order,
-            customerName,
-            status, 
-            paymentType,
-            amount);
-        
-        this.orders.push(order);
+        await this.repository.save(order);
         return order.id;
     }
 
-    getById(): Order {
-        throw new Error("Method not implemented.");
+    async getById(id: string): Promise<Order> {
+        return await this.repository.findOne({ id });
     }
-    update({ id, customerName, status, paymentType, amount }: IUpdateOrderDTO): void {
-        const order = new Order();
 
-        Object.assign(Order,
-            customerName,
-            status, 
-            paymentType,
-            amount);
+    async update({ id, customerName, status, paymentType, amount }: IUpdateOrderDTO): Promise<void> {
+        // const order = this.repository.({
+
+        // });
         
-        this.orders.push(order);
-    }
-    delete(id:string): void {
-        throw new Error("Method not implemented.");
+        // this.repository.update(order);
     }
 
+    async delete(id:string): Promise<void> {
+        this.repository.delete(id);   
+    }
 }
 
 export { OrdersRepository } 

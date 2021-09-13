@@ -1,0 +1,51 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentação Pastecco Pedidos",
+        "description": "API Pastecco Pedidos",
+        "version": "1.0.0",
+        "contact": {
+            "email": "kleyson.santiago@gmail.com"
+        }
+    },
+    "paths": {
+        "tags": "Pedido",
+        "/orders": {
+            "post": {
+            "sumamary": "Criar pedido",
+            "description": "Criar um novo pedido",
+            "requestBody": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "customerName": {
+                                    "type": "string"
+                                }, 
+                                "status": {
+                                    "type": "string"
+                                },
+                                "paymentType": {
+                                    "type": "string"
+                                }, 
+                                "amount": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "201": {
+                    "description": "Created"
+                },
+                "500": {
+                    "description": "Internal server error"
+                }
+            }   
+            } 
+        }
+    }
+}

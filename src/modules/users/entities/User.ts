@@ -1,14 +1,26 @@
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
+import { CreateOrderController } from "../../orders/useCases/createOrder/CreateOrderController";
 
+@Entity("Users")
 class User {
+    @PrimaryColumn()
     id: string;
-    name: string; 
+    @Column()
+    name: string;
+    @Column() 
     username: string;
-    roleId: string; 
+    @Column()
+    roleId: string;
+    @Column()
     password: string;
+    @Column()
     created_by: string;
+    @CreateDateColumn()
     created_at: Date;
+    @Column()
     updated_by: string;
+    @UpdateDateColumn()
     updated_at: Date
 
     constructor() {
