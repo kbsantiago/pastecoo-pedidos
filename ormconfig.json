@@ -1,7 +1,7 @@
 {
     "type": "postgres",
     "port": 5432,
-    "host": "database_pedidos",
+    "host": "localhost",
     "username": "root",
     "password": "postgres",
     "database": "OrdersDB",

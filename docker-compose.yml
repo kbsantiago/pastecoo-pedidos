@@ -1,9 +1,9 @@
 version: "3.7"
 
 services: 
-  database_pedidos:
+  db:
     image: postgres
-    container_name: database_pedidos 
+    container_name: db 
     expose:
       - "3306"
     ports: 
@@ -23,9 +23,9 @@ services:
     volumes:
       - .:/usr/app
     links: 
-      - database_pedidos
+      - db
     depends_on:
-      - database_pedidos
+      - db
 
 volumes: 
   pgdata: 
