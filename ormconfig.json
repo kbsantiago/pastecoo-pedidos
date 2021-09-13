@@ -1,0 +1,13 @@
+{
+    "type": "postgres",
+    "port": 5432,
+    "host": "database_pedidos",
+    "username": "root",
+    "password": "postgres",
+    "database": "OrdersDB",
+    "entities": ["./src/modules/orders/entities/*.ts"],
+    "migrations": ["./src/database/migrations/*.ts"],
+    "cli": {
+        "migrationsDir": "./src/database/migrations/"
+    }
+}

@@ -1,4 +1,4 @@
-import { Item } from "../model/Item";
+import { Item } from "../entities/Product";
 
 interface ICreateItemDTO {
     name: string; 

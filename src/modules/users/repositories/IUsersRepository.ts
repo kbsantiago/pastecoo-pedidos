@@ -1,4 +1,4 @@
-import { Order } from "../entities/Order";
+import { User } from "../entities/User";
 
 interface ICreateOrderDTO {
     customerName: string;
@@ -16,10 +16,10 @@ interface IUpdateOrderDTO {
 }
 
 interface IOrdersRepository {
-    get(): Promise<Order[]>;
-    getById(id: string): Promise<Order>;
-    create({ customerName, status, paymentType, amount }: ICreateOrderDTO): Promise<string>;
-    update({ id, customerName, status, paymentType, amount }: IUpdateOrderDTO): Promise<void>;
+    get(): User[];
+    getById(id: string): User;
+    create({ customerName, status, paymentType, amount }: ICreateOrderDTO): string;
+    update({ id, customerName, status, paymentType, amount }: IUpdateOrderDTO): void;
     delete(id: string): void;
 }
 

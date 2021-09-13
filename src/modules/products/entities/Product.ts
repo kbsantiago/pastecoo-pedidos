@@ -1,14 +1,21 @@
-import { v4 as uuidV4 } from 'uuid';
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { v4 as uuidV4} from "uuid";
 
-class Order {
+@Entity("Products")
+class Product {
+    @PrimaryColumn()
     id: string;
-    customerName: string; 
-    orderStatus: string;
-    paymentType: string; 
-    amount: number;
+    @Column()
+    name: string;
+    @Column() 
+    price: number;
+    @Column()
     created_by: string;
+    @CreateDateColumn()
     created_at: Date;
+    @Column()
     updated_by: string;
+    @UpdateDateColumn()
     updated_at: Date
 
     constructor() {
@@ -21,6 +28,7 @@ class Order {
             this.updated_at = new Date();
         }
     }
+
 }
 
-export { Order }
+export { Product }

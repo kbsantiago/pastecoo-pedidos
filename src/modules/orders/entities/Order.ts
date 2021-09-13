@@ -1,12 +1,25 @@
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
-
-class Role {
+@Entity("Orders")
+class Order {
+    @PrimaryColumn()
     id: string;
-    name: string; 
+    @Column()
+    customerName: string; 
+    @Column()
+    status: string;
+    @Column()
+    paymentType: string;
+    @Column() 
+    amount: number;
+    @Column()
     created_by: string;
+    @CreateDateColumn()
     created_at: Date;
+    @Column()
     updated_by: string;
+    @UpdateDateColumn()
     updated_at: Date
 
     constructor() {
@@ -21,4 +34,4 @@ class Role {
     }
 }
 
-export { Role }
+export { Order }

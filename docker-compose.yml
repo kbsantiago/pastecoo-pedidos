@@ -1,0 +1,32 @@
+version: "3.7"
+
+services: 
+  database_pedidos:
+    image: postgres
+    container_name: database_pedidos 
+    expose:
+      - "3306"
+    ports: 
+      - "5432:5432"
+    restart: always
+    environment: 
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=OrdersDB
+    volumes: 
+      - pgdata:/data/postgres
+  app:
+    build: .
+    container_name: pastecco-pedidos
+    ports: 
+      - "3000:3000"
+    volumes:
+      - .:/usr/app
+    links: 
+      - database_pedidos
+    depends_on:
+      - database_pedidos
+
+volumes: 
+  pgdata: 
+    driver: local
