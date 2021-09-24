@@ -1,10 +1,12 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Generated, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
 @Entity("Orders")
 class Order {
     @PrimaryColumn()
     id: string;
+    @Column()
+    number: number;
     @Column()
     customerName: string; 
     @Column()
@@ -25,13 +27,14 @@ class Order {
     constructor() {
         if(!this.id) {
             this.id = uuidV4();
-            this.created_by = "user";
+            this.created_by = "f524e7b0-22a7-43b8-85b2-063b0a57423a";            
             this.created_at = new Date();
         } else {
-            this.updated_by = "user" 
+            this.updated_by = "f524e7b0-22a7-43b8-85b2-063b0a57423a" 
             this.updated_at = new Date();
         }
     }
 }
 
 export { Order }
+

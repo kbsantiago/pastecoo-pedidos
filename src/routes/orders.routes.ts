@@ -1,15 +1,15 @@
 import { Router } from "express";
-import createOrderController from "../modules/orders/useCases/createOrder";
-import listOrdersController from "../modules/orders/useCases/listOrders";
+import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
+import { CreateOrdersController } from "../modules/orders/useCases/orders/createOrders/CreateOrdersController";
+import { ListOrdersController } from "../modules/orders/useCases/orders/listOrders/ListOrdersController";
 
 const ordersRoutes = Router();
 
-ordersRoutes.get("/", (request, response) => {
-    return listOrdersController().handle(request, response);
-});
+const createOrderController = new CreateOrdersController();
+const listOrdersController = new ListOrdersController();
 
-ordersRoutes.post("/", (request, response) => {
-    return createOrderController().handler(request, response);
-});
+ordersRoutes.use(ensureAuthenticated);
+ordersRoutes.get("/", listOrdersController.handler);
+ordersRoutes.post("/", createOrderController.handler);
 
 export { ordersRoutes };

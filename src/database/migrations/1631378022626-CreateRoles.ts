@@ -18,7 +18,7 @@ export class CreateRoles1631378022626 implements MigrationInterface {
                     },
                     {
                         name: "created_by",
-                        type: "varchar"
+                        type: "uuid"
                     },
                     {
                         name: "created_at",
@@ -27,7 +27,7 @@ export class CreateRoles1631378022626 implements MigrationInterface {
                     },
                     {
                         name: "updated_by",
-                        type: "varchar",
+                        type: "uuid",
                         isNullable: true
                     },
                     {

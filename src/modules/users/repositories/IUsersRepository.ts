@@ -1,26 +1,29 @@
 import { User } from "../entities/User";
 
-interface ICreateOrderDTO {
-    customerName: string;
-    status: string;
-    paymentType: string; 
-    amount: number;
+interface ICreateUserDTO {
+    name: string;
+    username: string;
+    roleId: string; 
+    password: string;
+    created_by: string;
 }
 
-interface IUpdateOrderDTO {
+interface IUpdateUserDTO {
     id: string;
-    customerName: string;
-    status: string;
-    paymentType: string; 
-    amount: number;
+    name: string;
+    username: string;
+    roleId: string; 
+    password: string;
+    updated_by: string;
 }
 
-interface IOrdersRepository {
-    get(): User[];
-    getById(id: string): User;
-    create({ customerName, status, paymentType, amount }: ICreateOrderDTO): string;
-    update({ id, customerName, status, paymentType, amount }: IUpdateOrderDTO): void;
-    delete(id: string): void;
+interface IUsersRepository {
+    get(): Promise<User[]>;
+    getById(id: string): Promise<User>;
+    getByUsername(username: string): Promise<User>;
+    create({ name, username, roleId, password, created_by }: ICreateUserDTO): Promise<void>;
+    update({ id, name, username, roleId, password, updated_by }: IUpdateUserDTO): Promise<void>;
+    delete(id: string): Promise<void>;
 }
 
-export { IOrdersRepository, ICreateOrderDTO, IUpdateOrderDTO };
+export { IUsersRepository, ICreateUserDTO, IUpdateUserDTO };

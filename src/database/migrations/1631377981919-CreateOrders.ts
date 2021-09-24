@@ -30,7 +30,7 @@ export class CreateOrders1631377981919 implements MigrationInterface {
                     },
                     {
                         name: "created_by",
-                        type: "varchar"
+                        type: "uuid"
                     },
                     {
                         name: "created_at",
@@ -39,7 +39,7 @@ export class CreateOrders1631377981919 implements MigrationInterface {
                     },
                     {
                         name: "updated_by",
-                        type: "varchar",
+                        type: "uuid",
                         isNullable: true
                     },
                     {

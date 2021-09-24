@@ -7,6 +7,10 @@ class Product {
     id: string;
     @Column()
     name: string;
+    @Column()
+    description: string;
+    @Column()
+    image_url: string;
     @Column() 
     price: number;
     @Column()
@@ -20,11 +24,9 @@ class Product {
 
     constructor() {
         if(!this.id) {
-            this.id = uuidV4();
-            this.created_by = "user";
+            this.id = uuidV4();            
             this.created_at = new Date();
-        } else {
-            this.updated_by = "user" 
+        } else {            
             this.updated_at = new Date();
         }
     }

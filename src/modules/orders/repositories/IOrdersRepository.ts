@@ -1,26 +1,34 @@
 import { Order } from "../entities/Order";
 
 interface ICreateOrderDTO {
-    customerName: string;
+    number: number;
+    customerName: string;    
     status: string;
     paymentType: string; 
     amount: number;
+    created_by: string;
 }
 
 interface IUpdateOrderDTO {
     id: string;
+    number: number;
     customerName: string;
     status: string;
     paymentType: string; 
     amount: number;
+    updated_by: string;
+}
+
+interface IReturnSequenceValue {
+    number: number;
 }
 
 interface IOrdersRepository {
     get(): Promise<Order[]>;
     getById(id: string): Promise<Order>;
-    create({ customerName, status, paymentType, amount }: ICreateOrderDTO): Promise<string>;
-    update({ id, customerName, status, paymentType, amount }: IUpdateOrderDTO): Promise<void>;
+    create({ number, customerName,  status, paymentType, amount, created_by }: ICreateOrderDTO): Promise<string>;
+    update({ id, number, customerName, status, paymentType, amount, updated_by }: IUpdateOrderDTO): Promise<void>;
     delete(id: string): void;
 }
 
-export { IOrdersRepository, ICreateOrderDTO, IUpdateOrderDTO };
+export { IOrdersRepository, ICreateOrderDTO, IUpdateOrderDTO, IReturnSequenceValue };

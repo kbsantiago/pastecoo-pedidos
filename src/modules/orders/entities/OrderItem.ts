@@ -1,15 +1,15 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity("OrderItems")
-class Item {
+class OrderItem {
     @PrimaryColumn()
-    orderId: number;
+    orderId: string;
     @PrimaryColumn()
-    productId: number;
+    productId: string;
     @Column()
     quantity: number;
     @Column()
     price: number;
 }
 
-export { Item }
+export { OrderItem }

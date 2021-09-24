@@ -1,6 +1,5 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
-import { CreateOrderController } from "../../orders/useCases/createOrder/CreateOrderController";
 
 @Entity("Users")
 class User {
@@ -25,11 +24,9 @@ class User {
 
     constructor() {
         if(!this.id) {
-            this.id = uuidV4();
-            this.created_by = "user";
+            this.id = uuidV4();            
             this.created_at = new Date();
-        } else {
-            this.updated_by = "user" 
+        } else {            
             this.updated_at = new Date();
         }
     }

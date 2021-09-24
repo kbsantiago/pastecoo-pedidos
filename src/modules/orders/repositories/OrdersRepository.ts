@@ -1,6 +1,6 @@
 import { getRepository, Repository } from "typeorm";
 import { Order } from "../entities/Order";
-import { IOrdersRepository, ICreateOrderDTO, IUpdateOrderDTO} from "./IOrdersRepository";
+import { IOrdersRepository, ICreateOrderDTO, IUpdateOrderDTO, IReturnSequenceValue} from "./IOrdersRepository";
 
 class OrdersRepository implements IOrdersRepository{
     private repository: Repository<Order>;
@@ -13,9 +13,10 @@ class OrdersRepository implements IOrdersRepository{
         return await this.repository.find();
     }
 
-    async create({ customerName, status, paymentType, amount }: ICreateOrderDTO): Promise<string> {
+    async create({ number, customerName, status, paymentType, amount, created_by }: ICreateOrderDTO): Promise<string> {
+        console.log(number);
         const order = this.repository.create({
-            customerName, status, paymentType, amount,
+            number, customerName, status, paymentType, amount, created_by
         });
 
         await this.repository.save(order);
@@ -26,7 +27,7 @@ class OrdersRepository implements IOrdersRepository{
         return await this.repository.findOne({ id });
     }
 
-    async update({ id, customerName, status, paymentType, amount }: IUpdateOrderDTO): Promise<void> {
+    async update({ id, customerName, status, paymentType, amount, updated_by }: IUpdateOrderDTO): Promise<void> {
         // const order = this.repository.({
 
         // });
@@ -36,6 +37,11 @@ class OrdersRepository implements IOrdersRepository{
 
     async delete(id:string): Promise<void> {
         this.repository.delete(id);   
+    }
+
+    async getNextOrderNumber(): Promise<number> {
+        const orderNumber = await this.repository.query("SELECT nextval('SEQ_ORDER_NUMBER')");         
+        return orderNumber[0].nextval;              
     }
 }
 

@@ -31,7 +31,7 @@ export class CreateUsers1631382310446 implements MigrationInterface {
                     },
                     {
                         name: "created_by",
-                        type: "varchar"
+                        type: "uuid"
                     },
                     {
                         name: "created_at",
@@ -40,7 +40,7 @@ export class CreateUsers1631382310446 implements MigrationInterface {
                     },
                     {
                         name: "updated_by",
-                        type: "varchar",
+                        type: "uuid",
                         isNullable: true
                     },
                     {

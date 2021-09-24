@@ -1,57 +1,44 @@
+import { getRepository, Repository } from "typeorm";
 import { User } from "../entities/User";
-import { IOrdersRepository, ICreateOrderDTO, IUpdateOrderDTO} from "./IUsersRepository";
+import { IUsersRepository, ICreateUserDTO, IUpdateUserDTO} from "./IUsersRepository";
 
-class OrdersRepository implements IOrdersRepository{
-    private orders: User[];
-
-    private static INSTANCE: OrdersRepository;
-
-    public static getInstance(): OrdersRepository {
-        if(!OrdersRepository.INSTANCE) {
-            OrdersRepository.INSTANCE = new OrdersRepository();
-        }
-        return OrdersRepository.INSTANCE;
-    }
-
+class UsersRepository implements IUsersRepository{
+    private repository: Repository<User>;
+    
     constructor() {
-        this.orders = [];
+        this.repository = getRepository(User);
     }
 
-    get() {
-        return this.orders;
+    async get(): Promise<User[]> {
+        return await this.repository.find();
     }
 
-    create({ customerName, status, paymentType, amount }: ICreateOrderDTO) {
-        const order = new User();
-
-        Object.assign(User,
-            customerName,
-            status, 
-            paymentType,
-            amount);
-        
-        this.orders.push(order);
-        return order.id;
+    async create({ name, username, roleId, password, created_by }: ICreateUserDTO): Promise<void> {        
+        const user = this.repository.create({
+            name, username, roleId, password, created_by
+        });
+        await this.repository.save(user);
     }
 
-    getById(): User {
-        throw new Error("Method not implemented.");
+    async getById(id: string): Promise<User> {
+        return await this.repository.findOne(id);
     }
-    update({ id, customerName, status, paymentType, amount }: IUpdateOrderDTO): void {
-        const order = new User();
 
-        Object.assign(User,
-            customerName,
-            status, 
-            paymentType,
-            amount);
-        
-        this.orders.push(order);
+    async getByUsername(username: string): Promise<User> {
+        return this.repository.findOne( { where: { username: username } });
     }
-    delete(id:string): void {
+
+    async update({ id, name, username, roleId, password, updated_by }: IUpdateUserDTO): Promise<void> {
+        const user = this.repository.create({
+            name, username, roleId, password, updated_by
+        });
+        await this.repository.save(user);
+    }
+    
+    async delete(id:string): Promise<void> {
         throw new Error("Method not implemented.");
     }
 
 }
 
-export { OrdersRepository } 
+export { UsersRepository } 
