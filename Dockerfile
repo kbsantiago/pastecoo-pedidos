@@ -4,9 +4,7 @@ WORKDIR /usr/app
 
 COPY package.json ./
 
-RUN RUN apk add --update python make g++\
-    && rm -rf /var/cache/apk/* && \
-    npm install 
+RUN RUN npm install 
 
 COPY . .
 
