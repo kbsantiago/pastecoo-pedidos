@@ -22,7 +22,7 @@ export class CreateOrderItems1631378000438 implements MigrationInterface {
                         type: "integer"
                     },
                     {
-                        name: "sellPrice",
+                        name: "price",
                         type: "decimal"
                     },
                 ]

@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, Generated, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Generated, JoinColumn, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
+import { OrderItem } from "./OrderItem";
 
 @Entity("Orders")
 class Order {
@@ -15,6 +16,9 @@ class Order {
     paymentType: string;
     @Column() 
     amount: number;
+    @OneToMany(() => OrderItem, item => item.order)
+    @JoinColumn({ name: 'orderId' })
+    items: OrderItem[];
     @Column()
     created_by: string;
     @CreateDateColumn()
@@ -26,11 +30,9 @@ class Order {
 
     constructor() {
         if(!this.id) {
-            this.id = uuidV4();
-            this.created_by = "f524e7b0-22a7-43b8-85b2-063b0a57423a";            
+            this.id = uuidV4();                      
             this.created_at = new Date();
-        } else {
-            this.updated_by = "f524e7b0-22a7-43b8-85b2-063b0a57423a" 
+        } else {            
             this.updated_at = new Date();
         }
     }

@@ -1,8 +1,10 @@
 import { Order } from "../entities/Order";
+import { OrderItem } from "../entities/OrderItem";
 
 interface ICreateOrderDTO {
     number: number;
     customerName: string;    
+    items: OrderItem[];
     status: string;
     paymentType: string; 
     amount: number;
@@ -11,8 +13,9 @@ interface ICreateOrderDTO {
 
 interface IUpdateOrderDTO {
     id: string;
-    number: number;
+    number: number;    
     customerName: string;
+    items: OrderItem[];
     status: string;
     paymentType: string; 
     amount: number;
@@ -26,8 +29,8 @@ interface IReturnSequenceValue {
 interface IOrdersRepository {
     get(): Promise<Order[]>;
     getById(id: string): Promise<Order>;
-    create({ number, customerName,  status, paymentType, amount, created_by }: ICreateOrderDTO): Promise<string>;
-    update({ id, number, customerName, status, paymentType, amount, updated_by }: IUpdateOrderDTO): Promise<void>;
+    create({ number, customerName, items, status, paymentType, amount, created_by }: ICreateOrderDTO): Promise<string>;
+    update({ id, number, customerName, items, status, paymentType, amount, updated_by }: IUpdateOrderDTO): Promise<void>;
     delete(id: string): void;
 }
 

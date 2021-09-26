@@ -1,7 +1,0 @@
-
-
-class ListOrderItemsController {
-
-}
-
-export { ListOrderItemsController } 

@@ -1,5 +1,7 @@
+import { Console } from "console";
 import { getRepository, Repository } from "typeorm";
 import { Order } from "../entities/Order";
+import { OrderItem } from "../entities/OrderItem";
 import { IOrdersRepository, ICreateOrderDTO, IUpdateOrderDTO, IReturnSequenceValue} from "./IOrdersRepository";
 
 class OrdersRepository implements IOrdersRepository{
@@ -13,13 +15,23 @@ class OrdersRepository implements IOrdersRepository{
         return await this.repository.find();
     }
 
-    async create({ number, customerName, status, paymentType, amount, created_by }: ICreateOrderDTO): Promise<string> {
-        console.log(number);
+    async create({ number, customerName, items, status, paymentType, amount, created_by }: ICreateOrderDTO): Promise<string> {        
         const order = this.repository.create({
-            number, customerName, status, paymentType, amount, created_by
+            number, customerName, items, status, paymentType, amount, created_by
+        });
+
+        order.items.forEach(element => {
+            element.orderId = order.id;
+            order.amount += element.price;
         });
 
         await this.repository.save(order);
+        await this.repository.manager.transaction.apply;
+
+        order.items.forEach(element => {
+            getRepository(OrderItem).save(element);
+        });
+
         return order.id;
     }
 
@@ -27,7 +39,7 @@ class OrdersRepository implements IOrdersRepository{
         return await this.repository.findOne({ id });
     }
 
-    async update({ id, customerName, status, paymentType, amount, updated_by }: IUpdateOrderDTO): Promise<void> {
+    async update({ id, number, customerName, status, paymentType, amount, updated_by }: IUpdateOrderDTO): Promise<void> {
         // const order = this.repository.({
 
         // });
