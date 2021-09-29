@@ -5,7 +5,7 @@
   "author": "kbsantiago <kleyson.santiago@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node --transpile-only src/server.ts",
+    "start": "nodemon --exec npx ts-node src/server.ts",
     "dev": "ts-node-dev --inspect --transpile-only  --ignore-watch node_modules --respawn src/server.ts",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli"
   },
@@ -13,6 +13,7 @@
     "@types/node": "^16.9.6",
     "bcryptjs": "^2.4.3",
     "consign": "^0.1.6",
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
@@ -27,6 +28,7 @@
     "yarn": "^1.22.11"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.12",
     "@types/crypto-js": "^4.0.2",
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.5",

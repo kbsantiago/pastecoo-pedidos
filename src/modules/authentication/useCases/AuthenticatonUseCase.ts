@@ -30,13 +30,13 @@ class AuthenticationUseCase {
         const user = await this.usersRepository.getByUsername(username);
 
         if(!user) {
-            throw new AppError('Email or password is incorrect.', 400);
+            throw new AppError('Username or password is incorrect.', 400);
         }
 
         const isValid = new PasswordUtils().isValid(user.password, password);
 
         if(!isValid) {
-            throw new AppError('Email or password is incorrect.', 400);
+            throw new AppError('Username or password is incorrect.', 400);
         }
 
         const token = sign({}, this.key, { subject: user.id, expiresIn: "1d", }); 

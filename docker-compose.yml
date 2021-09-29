@@ -19,7 +19,7 @@ services:
     build: .
     container_name: pastecco-pedidos
     ports: 
-      - "3000:3000"
+      - "5000:5000"
     volumes:
       - .:/usr/app      
       - /usr/src/app/node_modules
