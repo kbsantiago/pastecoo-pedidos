@@ -26,6 +26,11 @@ interface IReturnSequenceValue {
     number: number;
 }
 
+interface IReturnTopFiveOrderItems {
+    productName: string;
+    quantity: number;
+}
+
 interface IOrdersRepository {
     get(): Promise<Order[]>;
     getById(id: string): Promise<Order>;
@@ -34,4 +39,4 @@ interface IOrdersRepository {
     delete(id: string): void;
 }
 
-export { IOrdersRepository, ICreateOrderDTO, IUpdateOrderDTO, IReturnSequenceValue };
+export { IOrdersRepository, ICreateOrderDTO, IUpdateOrderDTO, IReturnSequenceValue, IReturnTopFiveOrderItems };

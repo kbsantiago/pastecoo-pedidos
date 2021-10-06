@@ -8,7 +8,9 @@ class ListOrdersUseCase {
         private ordersRepository: OrdersRepository) {}
 
     async execute(): Promise<Order[]>{
-        return await this.ordersRepository.get();
+        const result = await this.ordersRepository.get();
+        console.log(result);
+        return result;
     }
 }
 
