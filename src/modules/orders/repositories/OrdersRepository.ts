@@ -34,7 +34,7 @@ class OrdersRepository implements IOrdersRepository{
 
         order.items.forEach(element => {
             element.orderId = order.id;
-            order.amount += element.price;
+            order.amount += element.sellPrice;
         });
 
         await this.repository.save(order);
@@ -69,7 +69,7 @@ class OrdersRepository implements IOrdersRepository{
     }
 
     async getTopFiveOrdersItems(): Promise<IReturnTopFiveOrderItems[]> {
-        const items = await getRepository(OrderItem).query('select p."name", sum(quantity) as "quantity" from "OrderItems" o, "Products" p where CAST(o."productId" as text) = CAST(p.id as text) group by p."name" order by sum(quantity) desc limit 5');        
+        const items = await getRepository(OrderItem).query('select p."name", p."price", p."image_url", sum(quantity) as "quantity" from "OrderItems" o, "Products" p where CAST(o."productId" as text) = CAST(p.id as text) group by p."name", p."price", p."image_url" order by sum(quantity) desc limit 5');        
         console.log(items);
         return items;
     }
