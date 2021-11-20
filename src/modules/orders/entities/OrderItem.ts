@@ -12,7 +12,7 @@ class OrderItem {
     @Column()
     quantity: number;
     @Column()
-    sellPrice: number;
+    price: number;
 }
 
 export { OrderItem }

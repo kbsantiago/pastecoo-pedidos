@@ -15,14 +15,14 @@ class OrdersRepository implements IOrdersRepository{
     async get(): Promise<Order[]> {
         const orders = await this.repository.find();
 
-        // orders.forEach(element => {
-        //     getRepository(OrderItem).find( { where: { orderId: element.id } } ).then( result =>  {                
-        //         if(result.length > 0) {
-        //             element.items = [ ];
-        //             result.forEach(item => element.items.push(item));                    
-        //         }
-        //     });            
-        // });
+        orders.forEach(element => {
+            getRepository(OrderItem).find( { where: { orderId: element.id } } ).then( result =>  {                
+                if(result.length > 0) {
+                    element.items = [ ];
+                    result.forEach(item => element.items.push(item));                    
+                }
+            });            
+        });
 
         return orders;
     }
@@ -34,7 +34,7 @@ class OrdersRepository implements IOrdersRepository{
 
         order.items.forEach(element => {
             element.orderId = order.id;
-            order.amount += element.sellPrice;
+            order.amount += element.price;
         });
 
         await this.repository.save(order);
@@ -69,7 +69,7 @@ class OrdersRepository implements IOrdersRepository{
     }
 
     async getTopFiveOrdersItems(): Promise<IReturnTopFiveOrderItems[]> {
-        const items = await getRepository(OrderItem).query('select p."name", p."price", p."image_url", sum(quantity) as "quantity" from "OrderItems" o, "Products" p where CAST(o."productId" as text) = CAST(p.id as text) group by p."name", p."price", p."image_url" order by sum(quantity) desc limit 5');        
+        const items = await getRepository(OrderItem).query('select p."id", p."name", p."price", p."image_url", sum(quantity) as "quantity" from "OrderItems" o, "Products" p where CAST(o."productId" as text) = CAST(p.id as text) group by p."id", p."name", p."price", p."image_url" order by sum(quantity) desc limit 5');        
         console.log(items);
         return items;
     }
