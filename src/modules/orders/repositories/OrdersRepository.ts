@@ -15,14 +15,14 @@ class OrdersRepository implements IOrdersRepository{
     async get(): Promise<Order[]> {
         const orders = await this.repository.find();
 
-        orders.forEach(element => {
-            getRepository(OrderItem).find( { where: { orderId: element.id } } ).then( result =>  {                
-                if(result.length > 0) {
-                    element.items = [ ];
-                    result.forEach(item => element.items.push(item));                    
-                }
-            });            
-        });
+        // orders.forEach(element => {
+        //     getRepository(OrderItem).find( { where: { orderId: element.id } } ).then( result =>  {                
+        //         if(result.length > 0) {
+        //             element.items = [ ];
+        //             result.forEach(item => element.items.push(item));                    
+        //         }
+        //     });            
+        // });
 
         return orders;
     }
