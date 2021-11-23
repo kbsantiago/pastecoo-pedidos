@@ -22,6 +22,12 @@ interface IUpdateOrderDTO {
     updated_by: string;
 }
 
+interface IUpdateStatusOrderDTO {
+    id: string;   
+    status: string;
+    updated_by: string;
+}
+
 interface IReturnSequenceValue {
     number: number;
 }
@@ -40,4 +46,4 @@ interface IOrdersRepository {
     delete(id: string): void;
 }
 
-export { IOrdersRepository, ICreateOrderDTO, IUpdateOrderDTO, IReturnSequenceValue, IReturnTopFiveOrderItems };
+export { IOrdersRepository, ICreateOrderDTO, IUpdateOrderDTO, IReturnSequenceValue, IReturnTopFiveOrderItems, IUpdateStatusOrderDTO };

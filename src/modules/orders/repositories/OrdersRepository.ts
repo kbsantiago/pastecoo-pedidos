@@ -3,7 +3,7 @@ import { getRepository, Repository } from "typeorm";
 import { ordersRoutes } from "../../../routes/orders.routes";
 import { Order } from "../entities/Order";
 import { OrderItem } from "../entities/OrderItem";
-import { IOrdersRepository, ICreateOrderDTO, IUpdateOrderDTO, IReturnSequenceValue, IReturnTopFiveOrderItems} from "./IOrdersRepository";
+import { IOrdersRepository, ICreateOrderDTO, IUpdateOrderDTO, IReturnSequenceValue, IReturnTopFiveOrderItems, IUpdateStatusOrderDTO } from "./IOrdersRepository";
 
 class OrdersRepository implements IOrdersRepository{
     private repository: Repository<Order>;
@@ -32,6 +32,7 @@ class OrdersRepository implements IOrdersRepository{
             number, customerName, items, status, paymentType, amount, created_by
         });
 
+        console.log(order);
         order.items.forEach(element => {
             element.orderId = order.id;
             order.amount += element.price;
@@ -57,6 +58,10 @@ class OrdersRepository implements IOrdersRepository{
         // });
         
         // this.repository.update(order);
+    }
+
+    async patch({ id, status, updated_by }: IUpdateStatusOrderDTO): Promise<void> {
+        await this.repository.update(id, { status, updated_by });
     }
 
     async delete(id:string): Promise<void> {
