@@ -4,6 +4,7 @@ import { sign } from "jsonwebtoken";
 import { PasswordUtils } from "../../../utils/PasswordUtils";
 import { UsersRepository } from "../../users/repositories/UsersRepository";
 import { AppError } from "../../../errors/AppError";
+import { RolesRepository } from "../../roles/repositories/RolesRepository";
 
 interface IRequest {
     username: string;
@@ -14,6 +15,7 @@ interface IResponse {
     user: {
         id: string,
         username: string;
+        role: string;
     },
     token: string;
 }
@@ -23,11 +25,13 @@ class AuthenticationUseCase {
     private key:string = "0c01565485bc32a662900696c9ce228e";
 
     constructor(@inject("UsersRepository")
-                private usersRepository: UsersRepository) {}
+                private usersRepository: UsersRepository,
+                private rolesRepository: RolesRepository) {}
 
     async execute({ username, password }: IRequest): Promise<IResponse> {
 
         const user = await this.usersRepository.getByUsername(username);
+        const role = await this.rolesRepository.getById(user.roleId);
 
         if(!user) {
             throw new AppError('Username or password is incorrect.', 400);
@@ -46,6 +50,7 @@ class AuthenticationUseCase {
             user: {
                 id: user.id, 
                 username: user.username,
+                role:role.name
             }
         }
 
