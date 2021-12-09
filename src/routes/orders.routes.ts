@@ -15,7 +15,7 @@ const patchOrdersController = new PatchOrdersController();
 ordersRoutes.use(ensureAuthenticated);
 ordersRoutes.get("/", listOrdersController.handler);
 ordersRoutes.post("/", createOrderController.handler);
-ordersRoutes.patch("/", createOrderController.handler);
+ordersRoutes.patch("/", patchOrdersController.handle);
 ordersRoutes.get("/top-five", topFiveOrderItemsController.handler);
 
 export { ordersRoutes };
